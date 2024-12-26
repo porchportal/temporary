@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - StockCrush</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-custom {
+            background-color: #1e1e1e;
+        }
+
+        .cart-container {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .cart-item {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .quantity-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+
+        .total-section {
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #e67e22;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cancel-btn {
+            background: none;
+            border: none;
+            color: #ff4444;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .cancel-btn:hover {
+            color: #ff0000;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px;
+            background-color: #282828;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .return-btn {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .return-btn:hover {
+            background-color: #e67e22;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">StockCrush</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="price.html"><i class="fas fa-arrow-left"></i>
+                            Back</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <div class="container">
+        <div class="cart-container">
+            <h2 class="mb-4">Your Cart</h2>
+            <div class="cart-items">
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5>Premium Subscription</h5>
+                            <p class="text-muted">Monthly Plan</p>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="quantity-btn" onclick="updateQuantity('decrease')">-</button>
+                            <span id="quantity">1</span>
+                            <button class="quantity-btn" onclick="updateQuantity('increase')">+</button>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center">
+                                <p id="subtotal" class="mb-0">$50.00</p>
+                                <button class="cancel-btn ml-3" onclick="removeItem(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total-section">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 id="total">$50.00</h4>
+                    </div>
+                </div>
+                <a href="#" class="checkout-btn btn" onclick="goToCheckout()">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the plan from URL or session storage
+            let urlParams = new URLSearchParams(window.location.search);
+            let plan = urlParams.get('plan');
+            let savedQuantity = 1;
+
+            // Check if we're returning from checkout
+            const savedState = sessionStorage.getItem('cartState');
+            if (savedState) {
+                const cartState = JSON.parse(savedState);
+                plan = cartState.plan;
+                savedQuantity = parseInt(cartState.quantity);
+                window.basePrice = cartState.basePrice; // Use the saved base price
+
+                // Update the display
+                document.querySelector('.cart-item h5').textContent = planDetails[plan].name;
+                document.getElementById('quantity').innerText = savedQuantity;
+                updatePrices(savedQuantity);
+            } else {
+                const planDetails = {
+                    'free': { name: 'Free Version', price: 0 },
+                    'freemium': { name: 'Freemium Version', price: 99 },
+                    'premium': { name: 'Premium Subscription', price: 199 }
+                };
+
+                if (plan && planDetails[plan]) {
+                    const details = planDetails[plan];
+                    window.basePrice = details.price;
+                    document.querySelector('.cart-item h5').textContent = details.name;
+                    document.getElementById('quantity').innerText = savedQuantity;
+                    updatePrices(savedQuantity);
+                }
+            }
+        });
+
+        function updateQuantity(action) {
+            let quantityElement = document.getElementById('quantity');
+            let currentQuantity = parseInt(quantityElement.innerText);
+
+            if (action === 'increase') {
+                currentQuantity++;
+            } else if (action === 'decrease' && currentQuantity > 1) {
+                currentQuantity--;
+            }
+
+            quantityElement.innerText = currentQuantity;
+            updatePrices(currentQuantity);
+
+            // Save current state
+            saveCartState();
+        }
+
+
+        function updatePrices(quantity) {
+            const subtotal = window.basePrice * quantity;
+            document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('total').innerText = `$${subtotal.toFixed(2)}`;
+        }
+
+        function removeItem(button) {
+            const cartItem = button.closest('.cart-item');
+            cartItem.remove();
+
+            const cartItems = document.querySelectorAll('.cart-item');
+            if (cartItems.length === 0) {
+                showEmptyCart();
+                // Clear session storage when cart is empty
+                sessionStorage.removeItem('cartState');
+            } else {
+                updateTotalPrice();
+            }
+        }
+
+        function updateTotalPrice() {
+            const subtotals = document.querySelectorAll('#subtotal');
+            let total = 0;
+            subtotals.forEach(sub => {
+                const price = parseFloat(sub.innerText.replace('$', ''));
+                total += price;
+            });
+            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function showEmptyCart() {
+            const cartContainer = document.querySelector('.cart-container');
+            cartContainer.innerHTML = `
+                <div class="empty-cart">
+                    <h3>Your cart is empty</h3>
+                    <p>Add items from our subscription plans</p>
+                    <a href="price.html" class="return-btn">Return to Plans</a>
+                </div>
+            `;
+        }
+
+        function saveCartState() {
+            const quantity = document.getElementById('quantity').innerText;
+            const plan = new URLSearchParams(window.location.search).get('plan');
+            const price = document.getElementById('total').innerText.replace('$', '');
+
+            sessionStorage.setItem('cartState', JSON.stringify({
+                quantity: quantity,
+                plan: plan,
+                price: price
+            }));
+        }
+
+        function goToCheckout() {
+            const quantity = document.getElementById('quantity').innerText;
+            const plan = new URLSearchParams(window.location.search).get('plan');
+            const price = document.getElementById('total').innerText.replace('$', '');
+
+            // Save cart state before going to checkout
+            saveCartState();
+
+            window.location.href = `checkout.html?plan=${plan}&quantity=${quantity}&price=${price}`;
+        }
+
+        // Handle back button
+        window.onpopstate = function (event) {
+            const savedState = sessionStorage.getItem('cartState');
+            if (savedState) {
+                const cartState = JSON.parse(savedState);
+                document.getElementById('quantity').innerText = cartState.quantity;
+                updatePrices(cartState.quantity);
+            }
+        };
+
+        // Cleanup when leaving cart (except for checkout)
+        window.onbeforeunload = function () {
+            if (!window.location.href.includes('checkout.html')) {
+                sessionStorage.removeItem('cartState');
+            }
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

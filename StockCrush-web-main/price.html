@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockCrush Pricing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar-custom {
+            background-color: #1e1e1e;
+        }
+        .navbar-custom .nav-link {
+            color: #f39c12;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #e67e22;
+        }
+        .navbar-brand {
+            color: #f39c12;
+        }
+        .pricing-section {
+            padding: 50px 0;
+        }
+        .pricing-card {
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #1e1e1e;
+        }
+        .btn-subscribe {
+            background-color: #f39c12;
+            color: #121212;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-subscribe:hover {
+            background-color: #e67e22;
+        }
+        .pricing-card {
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #1e1e1e;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+            margin: 15px 0;
+        }
+
+        .features-list {
+            flex-grow: 1;
+            padding: 20px 0;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            color: #bbb;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #f39c12;
+        }
+
+        .button-container {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .btn-subscribe {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+            width: 80%;
+        }
+
+        .btn-subscribe:hover {
+            background-color: #e67e22;
+            color: white;
+            text-decoration: none;
+        }
+
+        .pricing-card h3 {
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .pricing-card p {
+            color: #bbb;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">StockCrush</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="row">
+                <!-- Free Plan -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Free Version</h3>
+                        <p>Basic features</p>
+                        <div class="price-tag">$0 / month</div>
+                        <div class="features-list">
+                            <ul>
+                                <li>Enhanced analytics</li>
+                                <li>Additional tools</li>
+                                <li>Basic support</li>
+                                <li>Real-time updates</li>
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <a href="cart.html?plan=free&price=0" class="btn-subscribe">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Freemium Plan -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Freemium Version</h3>
+                        <p>Advanced features</p>
+                        <div class="price-tag">$99 / month</div>
+                        <div class="features-list">
+                            <ul>
+                                <li>Advanced simulations</li>
+                                <li>Personalized learning</li>
+                                <li>AI-powered analytics</li>
+                                <li>24/7 priority support</li>
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <a href="cart.html?plan=freemium&price=99" class="btn-subscribe">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Premium Plan -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <h3>Premium Version</h3>
+                        <p>Full features</p>
+                        <div class="price-tag">$199 / month</div>
+                        <div class="features-list">
+                            <ul>
+                                <li>Advanced simulations</li>
+                                <li>Personalized learning</li>
+                                <li>AI-powered analytics</li>
+                                <li>24/7 priority support</li>
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <a href="cart.html?plan=premium&price=199" class="btn-subscribe">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

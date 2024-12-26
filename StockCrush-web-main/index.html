@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="about/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockCrush - Professional Stock Analysis Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ========== VARIABLES ========== */
+        :root {
+            /* Colors */
+            --primary-color: #f39c12;
+            --secondary-color: #e67e22;
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --nav-bg: rgba(30, 30, 30, 0.95);
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #bbb;
+    
+            /* Gradients */
+            --primary-gradient: linear-gradient(45deg, var(--primary-color), #ffd700);
+            --background-gradient: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.4s ease;
+    
+            /* Shadows */
+            --shadow-small: 0 5px 15px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 15px 30px rgba(0, 0, 0, 0.3);
+            --shadow-large: 0 20px 40px rgba(0, 0, 0, 0.4);
+    
+            /* Border Radius */
+            --radius-small: 8px;
+            --radius-medium: 15px;
+            --radius-large: 20px;
+    
+            /* Spacing */
+            --section-padding: 100px 0;
+            --card-padding: 2rem;
+        }
+    
+        /* ========== BASE STYLES ========== */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            margin: 0;
+            scroll-behavior: smooth;
+        }
+    
+        /* ========== TYPOGRAPHY ========== */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+    
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+    
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+    
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+    
+        /* ========== NAVIGATION ========== */
+        .navbar-custom {
+            background-color: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: var(--transition-fast);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+        }
+    
+        .brand-logo {
+            height: 40px;
+            width: 40px;
+            border-radius: var(--radius-small);
+            margin-right: 12px;
+            transition: var(--transition-fast);
+        }
+    
+        .brand-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    
+        .navbar-nav {
+            gap: 0.5rem;
+        }
+    
+        .nav-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem !important;
+            color: var(--text-primary) !important;
+            border-radius: var(--radius-small);
+            transition: var(--transition-fast);
+            position: relative;
+        }
+    
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+            transition: var(--transition-fast);
+        }
+    
+        .nav-link:hover::after {
+            width: 70%;
+        }
+    
+        /* Login Button */
+        .login-link {
+            background-color: rgba(243, 156, 18, 0.1);
+            border: 1px solid var(--primary-color);
+            margin-left: 0.5rem;
+        }
+    
+        .login-link:hover {
+            background-color: var(--primary-color);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+    
+        /* ========== HERO SECTION ========== */
+        .hero {
+            position: relative;
+            padding: 160px 0 100px;
+            background: var(--background-gradient);
+            overflow: hidden;
+        }
+    
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(243, 156, 18, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+    
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-right: 3rem;
+        }
+    
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleReveal 1s ease forwards;
+        }
+    
+        .hero-description {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+    
+        /* Hero Image */
+        .hero-image-wrapper {
+            position: relative;
+            padding: 2rem;
+            animation: floatAnimation 6s ease-in-out infinite;
+        }
+    
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-large);
+            transition: var(--transition-medium);
+        }
+    
+        .hero-image-shape {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--radius-large);
+            transform: translate(1rem, 1rem);
+            z-index: -1;
+            opacity: 0.3;
+            transition: var(--transition-medium);
+        }
+    
+        /* ========== BUTTONS ========== */
+        .cta-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: var(--radius-small);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+    
+        .primary-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+    
+        .primary-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: var(--shadow-small);
+        }
+    
+        .secondary-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+    
+        .secondary-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+    
+        /* ========== CARDS ========== */
+        .card-base {
+            background: var(--card-bg);
+            border-radius: var(--radius-large);
+            padding: var(--card-padding);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-medium);
+        }
+    
+        .card-base:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-medium);
+        }
+        /* Stats Section Styles */
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stats Card */
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(243, 156, 18, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Icon */
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+            opacity: 0.8;
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        /* Stats Info */
+        .stat-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary-color), #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .stat-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Stats Banner */
+        .stats-banner {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(243, 156, 18, 0.05), transparent);
+        }
+
+        /* Quick Stats */
+        .quick-stat {
+            position: relative;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .quick-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .quick-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            line-height: 1;
+        }
+    
+        /* Feature Cards */
+        .feature-card {
+            composes: card-base;
+            height: 100%;
+        }
+    
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-medium);
+        }
+        /* Team Section Styles */
+        .team-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(243, 156, 18, 0.08) 0%, transparent 70%);
+        }
+    
+        /* Team Cards */
+        .team-section .section-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, #f39c12, #f1c40f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100%;
+        }
+    
+        .team-image-wrapper {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+        }
+
+        .team-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+        }
+
+        /* Overlay */
+        .team-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .team-card:hover .team-overlay {
+            opacity: 1;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .team-card:hover .social-links {
+            transform: translateY(0);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 8px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* Info Section */
+        .team-info {
+            padding: 2rem;
+            text-align: left;
+            background: linear-gradient(to bottom, var(--card-bg), rgba(30, 30, 30, 0.95));
+        }
+
+        .team-name {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .team-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Achievement Cards */
+        .achievement-card {
+            composes: card-base;
+            min-height: 300px;
+        }
+    
+        .achievement-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: var(--radius-large);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-fast);
+        }
+    
+        /* ========== ANIMATIONS ========== */
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+    
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+    
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @keyframes floatAnimation {
+    
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+    
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    
+        /* ========== MEDIA QUERIES ========== */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+    
+            .hero-content {
+                padding-right: 1rem;
+            }
+        }
+    
+        @media (max-width: 991px) {
+            .navbar-nav {
+                padding: 1rem 0;
+            }
+    
+            .nav-link {
+                padding: 0.8rem 1.5rem !important;
+            }
+    
+            .login-link {
+                margin: 0.5rem 0;
+            }
+    
+            .hero {
+                text-align: center;
+                padding: 120px 0 80px;
+            }
+    
+            .hero-content {
+                padding-right: 0;
+            }
+    
+            [class*="-card"] {
+                margin-bottom: 2rem;
+            }
+            .team-section .section-title {
+                font-size: 3rem;
+            }
+            
+            .team-card {
+                margin-bottom: 2rem;
+            }
+            .stat-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+    
+        @media (max-width: 767px) {
+            .stats-banner {
+                padding: 1.5rem;
+            }
+            
+            .quick-stat {
+                margin-bottom: 1rem;
+            }
+            
+            .quick-stat-value {
+                font-size: 1.5rem;
+            }
+            .team-section .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .team-name {
+                font-size: 1.8rem;
+            }
+            
+            .team-info {
+                padding: 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+    
+            .hero-description {
+                font-size: 1.1rem;
+            }
+    
+            .cta-btn {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+    
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .team-section .section-title {
+                font-size: 2rem;
+            }
+            
+            .team-overlay {
+                opacity: 1;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            }
+            
+            .social-links {
+                transform: translateY(0);
+            }
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+    
+            .brand-logo {
+                height: 35px;
+                width: 35px;
+            }
+    
+            .hero-title {
+                font-size: 2rem;
+            }
+    
+            .hero-description {
+                font-size: 1rem;
+            }
+    
+            .hero-image-shape {
+                display: none;
+            }
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-icon {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .stat-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="about/logo.png" alt="StockCrush Logo" class="brand-logo">
+                <span class="brand-text">StockCrush</span>
+            </a>
+    
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team-section">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link login-link" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <div class="hero-text-wrapper" data-aos="fade-up">
+                        <h1 class="hero-title">Master the Market with StockCrush</h1>
+                        <p class="hero-description">Experience professional-grade stock analysis tools, real-time market
+                            insights, and advanced trading strategies - all in one powerful platform.</p>
+                        <div id="cta-buttons" class="hero-buttons">
+                            <a href="price.html" class="cta-btn primary-btn">
+                                <span>Get Started</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="https://heyzine.com/flip-book/c80e8d21c5.html" class="cta-btn secondary-btn">
+                                <span>Learn More</span>
+                                <i class="fas fa-book-open"></i>
+                            </a>
+                        </div>
+                        <!-- Back button for Heyzine page -->
+                        <div id="back-button" class="d-none">
+                            <a href="index.html" class="cta-btn primary-btn">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                <span>Back to Home</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image-container">
+                        <div class="hero-image-wrapper" data-aos="fade-up">
+                            <img src="about/6.png" alt="StockCrush Platform" class="hero-image">
+                            <!-- Overlay effects -->
+                            <div class="image-overlay"></div>
+                            <div class="glow-effect"></div>
+                            <!-- Decorative elements -->
+                            <div class="chart-line"></div>
+                            <div class="data-points">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h4>Real-Time Analysis</h4>
+                        <p>Access live market data, advanced charting tools, and instant technical analysis to make
+                            informed trading decisions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-bell feature-icon"></i>
+                        <h4>Smart Alerts</h4>
+                        <p>Set custom price alerts, trend notifications, and market condition updates to never miss a
+                            trading opportunity.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-chart-pie feature-icon"></i>
+                        <h4>Market Insights</h4>
+                        <p>Gain deep market insights through AI-powered analysis, predictive modeling, and comprehensive
+                            research tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Achievements Section -->
+    <section class="stats-section">
+        <div class="container">
+            <!-- Main Stats -->
+            <div class="row g-4 mb-5">
+                <!-- Market Analyses -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number">50K+</h3>
+                            <p class="stat-title">Market Analyses</p>
+                            <p class="stat-description">Comprehensive market analyses for clients</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Active Traders -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number">10K+</h3>
+                            <p class="stat-title">Active Traders</p>
+                            <p class="stat-description">Professional traders using our platform</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Success Rate -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number">95%</h3>
+                            <p class="stat-title">Success Rate</p>
+                            <p class="stat-description">Trading accuracy from our insights</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Global Markets -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number">25+</h3>
+                            <p class="stat-title">Global Markets</p>
+                            <p class="stat-description">International markets coverage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Additional Stats Banner -->
+            <div class="stats-banner">
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-6">
+                        <div class="quick-stat">
+                            <p class="quick-stat-label">Daily Active Users</p>
+                            <h4 class="quick-stat-value">5,000+</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="quick-stat">
+                            <p class="quick-stat-label">Trading Volume</p>
+                            <h4 class="quick-stat-value">$50M+</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="quick-stat">
+                            <p class="quick-stat-label">Response Time</p>
+                            <h4 class="quick-stat-value">&lt;1ms</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="quick-stat">
+                            <p class="quick-stat-label">Client Satisfaction</p>
+                            <h4 class="quick-stat-value">98%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team-section" class="team-section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+    
+            <div class="row justify-content-center g-4">
+                <!-- Team Member 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image-wrapper">
+                            <img src="about/1.jpg" alt="Team Member" class="team-image">
+                            <div class="team-overlay">
+                                <div class="social-links">
+                                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://github.com/porchportal" class="social-link"><i
+                                            class="fab fa-github"></i></a>
+                                    <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Varanpong</h3>
+                            <p class="team-role">CEO & Founder</p>
+                            <p class="team-description">Leading innovation in stock market analysis and trading solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Team Member 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image-wrapper">
+                            <img src="about/4.jpg" alt="Team Member" class="team-image">
+                            <div class="team-overlay">
+                                <div class="social-links">
+                                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://github.com/nus1315" class="social-link"><i
+                                            class="fab fa-github"></i></a>
+                                    <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Chayanapas</h3>
+                            <p class="team-role">Coordinator</p>
+                            <p class="team-description">Ensuring seamless operations and client satisfaction.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom Script for Back Button -->
+    <script>
+        // Function to check if we're in an iframe (Heyzine flipbook)
+        function isInIframe() {
+            try {
+                return window !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+
+        // Function to handle button visibility
+        function handleButtonVisibility() {
+            const ctaButtons = document.getElementById('cta-buttons');
+            const backButton = document.getElementById('back-button');
+
+            if (isInIframe()) {
+                // If we're in the Heyzine iframe
+                ctaButtons.classList.add('d-none');
+                backButton.classList.remove('d-none');
+            } else {
+                // If we're on the main site
+                ctaButtons.classList.remove('d-none');
+                backButton.classList.add('d-none');
+            }
+        }
+
+        // Run when the document is ready
+        document.addEventListener('DOMContentLoaded', function () {
+                const counters = document.querySelectorAll('.counter');
+                const speed = 200;
+
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+
+                    counter.setAttribute('data-target', counter.innerText);
+                    updateCount();
+                });
+            });
+    </script>
+
+</body>
+
+</html>

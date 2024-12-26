@@ -1,0 +1,7 @@
+.card-img-top {
+    width: 100%;
+    height: 300px; /* Set the height you want for cropped images */
+    object-fit: cover; /* Crop the image to fit */
+    object-position: top; /* Center the image within the crop */
+    border-radius: 8px; /* Optional: round corners */
+}

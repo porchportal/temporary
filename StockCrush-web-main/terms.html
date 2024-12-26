@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Privacy - StockCrush</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #f39c12;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: 40px;
+            margin-right: 12px;
+        }
+
+        .content {
+            padding: 120px 0 60px;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            background: transparent;
+            border: 2px solid #f39c12;
+            color: #f39c12;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: #f39c12;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h1 {
+            color: #f39c12;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #f39c12;
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #bbb;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #f39c12;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .tab-container {
+                flex-direction: column;
+            }
+
+            .tab {
+                width: 100%;
+                text-align: center;
+            }
+
+            .content {
+                padding: 100px 0 40px;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <img src="about/logo.png" alt="StockCrush Logo" class="brand-logo">
+                <span>StockCrush</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <div class="tab-container">
+                <button class="tab active" onclick="showTab('terms')">Terms of Service</button>
+                <button class="tab" onclick="showTab('privacy')">Privacy Policy</button>
+            </div>
+
+            <div id="terms" class="tab-content active">
+                <h1>Terms of Service</h1>
+
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using StockCrush, you agree to be bound by these Terms of Service. If you disagree
+                    with any part of these terms, you may not access our service.</p>
+
+                <h2>2. User Accounts</h2>
+                <p>When you create an account with us, you must provide accurate, complete, and current information.
+                    Failure to do so constitutes a breach of the Terms, which may result in immediate termination of
+                    your account.</p>
+
+                <h2>3. Trading and Financial Risks</h2>
+                <p>StockCrush provides stock analysis tools and information for educational purposes only. We are not
+                    financial advisors, and all trading decisions are made at your own risk.</p>
+
+                <ul>
+                    <li>Past performance is not indicative of future results</li>
+                    <li>Trading involves substantial risk of loss</li>
+                    <li>You are solely responsible for your trading decisions</li>
+                </ul>
+
+                <h2>4. Service Modifications</h2>
+                <p>We reserve the right to modify or discontinue any part of our service without notice. We shall not be
+                    liable to you or any third party for any modification, suspension, or discontinuance of the service.
+                </p>
+
+                <a href="register.html" class="back-btn">Back to Registration</a>
+            </div>
+
+            <div id="privacy" class="tab-content">
+                <h1>Privacy Policy</h1>
+
+                <h2>1. Information Collection</h2>
+                <p>We collect information that you provide directly to us, including:</p>
+                <ul>
+                    <li>Account information (name, email, username)</li>
+                    <li>Trading preferences and settings</li>
+                    <li>Usage data and analytics</li>
+                </ul>
+
+                <h2>2. Data Usage</h2>
+                <p>We use your information to:</p>
+                <ul>
+                    <li>Provide and maintain our service</li>
+                    <li>Improve user experience</li>
+                    <li>Send important notifications and updates</li>
+                    <li>Detect and prevent fraud</li>
+                </ul>
+
+                <h2>3. Data Protection</h2>
+                <p>We implement appropriate security measures to protect your personal information. However, no method
+                    of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+
+                <h2>4. Third-Party Services</h2>
+                <p>We may use third-party services that collect, monitor, and analyze user data to improve our service.
+                    These third parties have their own privacy policies addressing how they use such information.</p>
+
+                <a href="register.html" class="back-btn">Back to Registration</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

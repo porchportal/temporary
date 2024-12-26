@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - StockCrush</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-custom {
+            background-color: #1e1e1e;
+        }
+
+        .checkout-container {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .form-section {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #e0e0e0;
+        }
+
+        .form-control:focus {
+            background-color: #444;
+            color: #e0e0e0;
+            border-color: #f39c12;
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+        }
+
+        .payment-option {
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .payment-option.selected {
+            border-color: #f39c12;
+        }
+
+        .order-summary {
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .confirm-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .confirm-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .confirm-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .modal-header .close {
+            color: #e0e0e0;
+        }
+
+        .order-details h6 {
+            color: #f39c12;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+        .btn-primary:hover {
+            background-color: #e67e22;
+            border-color: #e67e22;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">StockCrush</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="cart.html" onclick="saveCartStateBeforeBack()"><i class="fas fa-arrow-left"></i> Back to
+                        Cart</a>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <div class="container">
+        <div class="checkout-container">
+            <h2 class="mb-4">Checkout</h2>
+            <div class="row">
+                <!-- Shipping Address Form -->
+                <div class="col-md-8">
+                    <div class="form-section">
+                        <h4>Shipping Address</h4>
+                        <form id="shipping-form">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="state">State</label>
+                                    <input type="text" class="form-control" id="state" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="zip">ZIP Code</label>
+                                    <input type="text" class="form-control" id="zip" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Payment Method Selection -->
+                    <div class="form-section">
+                        <h4>Payment Method</h4>
+                        <div class="payment-option" onclick="selectPayment('credit')">
+                            <input type="radio" name="payment" id="credit" checked>
+                            <label for="credit">Credit Card</label>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment('paypal')">
+                            <input type="radio" name="payment" id="paypal">
+                            <label for="paypal">PayPal</label>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment('bank')">
+                            <input type="radio" name="payment" id="bank">
+                            <label for="bank">Bank Transfer</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="col-md-4">
+                    <div class="order-summary">
+                        <h4>Order Summary</h4>
+                        <div class="mt-3">
+                            <span class="plan-name"></span>
+                            <p class="plan-quantity text-muted"></p>
+                            <div class="d-flex justify-content-between">
+                                <span>Subtotal</span>
+                                <span class="plan-price"></span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total</strong>
+                                <strong class="total-price"></strong>
+                            </div>
+                        </div>
+                        <button class="confirm-btn" onclick="showConfirmationModal()">Confirm Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title">Confirm Your Order</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="order-details">
+                        <h6>Order Details:</h6>
+                        <p class="plan-info mb-2"></p>
+                        <p class="quantity-info mb-2"></p>
+                        <p class="total-info mb-3"></p>
+
+                        <h6>Shipping Details:</h6>
+                        <p class="shipping-info mb-3"></p>
+
+                        <h6>Payment Method:</h6>
+                        <p class="payment-info mb-0"></p>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit Order</button>
+                    <button type="button" class="btn btn-primary" onclick="finalizeOrder()">Confirm Purchase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const planDetails = {
+            'free': { name: 'Free Version' },
+            'freemium': { name: 'Freemium Version' },
+            'premium': { name: 'Premium Subscription' }
+        };
+        function saveCartStateBeforeBack() {
+            const price = document.querySelector('.total-price').textContent.replace('$', '');
+            const quantity = document.querySelector('.plan-quantity').textContent.replace('Quantity: ', '');
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan');
+
+            sessionStorage.setItem('cartState', JSON.stringify({
+                quantity: quantity,
+                plan: plan,
+                price: price,
+                basePrice: parseFloat(price) / parseInt(quantity) // Store the unit price
+            }));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const quantity = urlParams.get('quantity');
+            const price = urlParams.get('price');
+            const plan = urlParams.get('plan');
+
+            if (plan && planDetails[plan]) {
+                const details = planDetails[plan];
+                document.querySelector('.order-summary .plan-name').textContent = details.name;
+                document.querySelector('.order-summary .plan-quantity').textContent = `Quantity: ${quantity}`;
+                document.querySelector('.order-summary .plan-price').textContent = `$${price}`;
+                document.querySelector('.order-summary .total-price').textContent = `$${price}`;
+            }
+        });
+
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+                option.querySelector('input[type="radio"]').checked = false;
+            });
+            const selected = document.getElementById(method);
+            selected.closest('.payment-option').classList.add('selected');
+            selected.checked = true;
+        }
+
+        function setLoadingState(isLoading) {
+            const btn = document.querySelector('.confirm-btn');
+            if (isLoading) {
+                btn.classList.add('loading');
+                btn.textContent = 'Processing...';
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('loading');
+                btn.textContent = 'Confirm Order';
+                btn.disabled = false;
+            }
+        }
+
+        function showConfirmationModal() {
+            const form = document.getElementById('shipping-form');
+            if (form.checkValidity()) {
+                updateModalContent();
+                $('#confirmationModal').modal('show');
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        function updateModalContent() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderDetails = {
+                plan: planDetails[urlParams.get('plan')].name,
+                quantity: urlParams.get('quantity'),
+                price: urlParams.get('price'),
+                shipping: {
+                    name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+                    email: document.getElementById('email').value,
+                    address: `${document.getElementById('address').value}, ${document.getElementById('city').value}, ${document.getElementById('state').value} ${document.getElementById('zip').value}`
+                },
+                payment: document.querySelector('input[name="payment"]:checked').id
+            };
+
+            document.querySelector('.modal .plan-info').textContent = `Plan: ${orderDetails.plan}`;
+            document.querySelector('.modal .quantity-info').textContent = `Quantity: ${orderDetails.quantity}`;
+            document.querySelector('.modal .total-info').textContent = `Total: $${orderDetails.price}`;
+            document.querySelector('.modal .shipping-info').textContent =
+                `${orderDetails.shipping.name}\n${orderDetails.shipping.email}\n${orderDetails.shipping.address}`;
+            document.querySelector('.modal .payment-info').textContent =
+                `Payment via ${orderDetails.payment.charAt(0).toUpperCase() + orderDetails.payment.slice(1)}`;
+        }
+
+        function finalizeOrder() {
+            setLoadingState(true);
+            $('#confirmationModal').modal('hide');
+
+            setTimeout(() => {
+                alert('Order successful! Thank you for your purchase.');
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function sendConfirmationEmail(orderDetails) {
+            const emailContent = `
+                Thank you for your purchase!
+                
+                Order Details:
+                - Plan: ${orderDetails.plan}
+                - Quantity: ${orderDetails.quantity}
+                - Total: $${orderDetails.price}
+                
+                Your subscription will be activated within 24 hours.
+                
+                Best regards,
+                StockCrush Team
+            `;
+
+            console.log('Confirmation email sent:', emailContent);
+        }
+    </script>
+</body>
+
+</html>
